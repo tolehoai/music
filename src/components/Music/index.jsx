@@ -1,24 +1,11 @@
-import { CssBaseline, Grid, Typography } from "@material-ui/core";
-import Slider from "@material-ui/core/Slider";
-import {
-  createTheme,
-  ThemeProvider,
-  useTheme,
-  withStyles,
-} from "@material-ui/core/styles";
+import { Grid, Typography } from "@material-ui/core";
+import { createTheme, ThemeProvider, useTheme } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
-import MusicControl from "../MusicControl";
-import MusicList from "../MusicList";
-import useStyles from "../style";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
-
+import { Link, Route, Switch } from "react-router-dom";
 import MusicCategory from "../MusicCategory";
-import Header from "../Header";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
-import CategoryList from "../CategoryList";
+import MusicControl from "../MusicControl";
+import useStyles from "../style";
 
 const theme = createTheme({
   palette: {
@@ -51,7 +38,6 @@ function Music(props) {
   const [kindOfMusic, setKindOfMusic] = useState(0);
 
   const musicListOld = musics.songs[country][kindOfMusic].songs;
-  console.log("top100_KL:", musics.songs.top100_KL[0]);
 
   let index = 0;
   const musicList = musicListOld.map((music, index) => ({
@@ -81,13 +67,6 @@ function Music(props) {
 
   // console.log(timeOfPlayClick.current)
   const [selectMusic, setSelectMusic] = useState({
-    // title: musicList[0].title,
-    // creator: musicList[0].creator,
-    // img: musicList[0].avatar,
-    // img_thumb: musicList[0].bgImage,
-    // url: musicList[0].music,
-    // index: 0,
-    // active: true,
     title: "Tô Lê Hoài",
     creator: "Tô Lê Hoài",
     img: "https://image.freepik.com/free-vector/astronaut-listening-music-with-headphone-cartoon-vector-icon-illustration-science-technology-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3492.jpg",
@@ -127,7 +106,6 @@ function Music(props) {
                     align="left"
                     style={{
                       color: "white",
-
                       cursor: "pointer",
                     }}
                   >
@@ -171,27 +149,13 @@ function Music(props) {
                 kindOfMusic={kindOfMusic}
                 setKindOfMusic={setKindOfMusic}
               />
-              <Switch>
-                {/* <Route path="/" exact>
-                  <MusicCategory
-                    musics={musics}
-                    selectMusic={selectMusic}
-                    setSelectMusic={setSelectMusic}
-                    indexRef={indexRef}
-                    country={country}
-                    setCountry={setCountry}
-                    kindOfMusic={kindOfMusic}
-                    setKindOfMusic={setKindOfMusic}
-                    play={play}
-                    setPlay={setPlay}
-                    firstTimeRef={firstTimeRef}
-                  />
-                </Route> */}
-              </Switch>
+
               <Switch>
                 <Route path="/category">
                   <MusicCategory
+                    //MusicList
                     musics={musics}
+                    //Sub
                     selectMusic={selectMusic}
                     setSelectMusic={setSelectMusic}
                     indexRef={indexRef}

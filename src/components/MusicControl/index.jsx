@@ -101,7 +101,7 @@ function MusicControl(props) {
       });
     }
   }, [selectMusic]);
-
+  ///Handle play music
   useEffect(() => {
     if (firstTimeRef.current === true) {
       const newPlay = {
@@ -262,68 +262,68 @@ function MusicControl(props) {
   };
   const [repeat, setRepeat] = useState(false);
 
-  const handleRepeatClick = () => {
-    var audio = document.getElementById("music");
-    // const newRepeat = {
-    //   status: !repeat.status,
-    // };
-    // setRepeat(newRepeat);
+  // const handleRepeatClick = () => {
+  //   var audio = document.getElementById("music");
+  //   // const newRepeat = {
+  //   //   status: !repeat.status,
+  //   // };
+  //   // setRepeat(newRepeat);
 
-    repeatRef.current = !repeatRef.current;
-    const newAction = !repeat.action;
+  //   repeatRef.current = !repeatRef.current;
+  //   const newAction = !repeat.action;
 
-    const newRepeat = {
-      action: repeatRef.current,
-    };
+  //   const newRepeat = {
+  //     action: repeatRef.current,
+  //   };
 
-    setRepeat(newRepeat);
+  //   setRepeat(newRepeat);
 
-    // if (repeatRef.current === false) {
+  //   // if (repeatRef.current === false) {
 
-    //   audio.addEventListener("ended", function () {
-    //     indexRef.current = indexRef.current + 1;
+  //   //   audio.addEventListener("ended", function () {
+  //   //     indexRef.current = indexRef.current + 1;
 
-    //     const newCurrentMusic = {
-    //       title: musicList[indexRef.current].title,
-    //       creator: musicList[indexRef.current].creator,
-    //       img: musicList[indexRef.current].avatar,
-    //       img_thumb: musicList[indexRef.current].bgImage,
-    //       url: musicList[indexRef.current].music,
-    //       index: indexRef.current,
-    //       active: true,
-    //     };
-    //     setSelectMusic(newCurrentMusic);
+  //   //     const newCurrentMusic = {
+  //   //       title: musicList[indexRef.current].title,
+  //   //       creator: musicList[indexRef.current].creator,
+  //   //       img: musicList[indexRef.current].avatar,
+  //   //       img_thumb: musicList[indexRef.current].bgImage,
+  //   //       url: musicList[indexRef.current].music,
+  //   //       index: indexRef.current,
+  //   //       active: true,
+  //   //     };
+  //   //     setSelectMusic(newCurrentMusic);
 
-    //     const newPlay = {
-    //       isPlay: true,
-    //       title: "Pause",
-    //     };
-    //     setPlay(newPlay);
-    //   });
-    // } else {
-    //   console.log("No Repeat");
-    //   audio.addEventListener("ended", function () {
-    //     console.log(indexRef.current);
-    //     indexRef.current = indexRef.current;
-    //     const newCurrentMusic = {
-    //       title: musicList[indexRef.current].title,
-    //       creator: musicList[indexRef.current].creator,
-    //       img: musicList[indexRef.current].avatar,
-    //       img_thumb: musicList[indexRef.current].bgImage,
-    //       url: musicList[indexRef.current].music,
-    //       index: indexRef.current,
-    //       active: true,
-    //     };
-    //     setSelectMusic(newCurrentMusic);
+  //   //     const newPlay = {
+  //   //       isPlay: true,
+  //   //       title: "Pause",
+  //   //     };
+  //   //     setPlay(newPlay);
+  //   //   });
+  //   // } else {
+  //   //   console.log("No Repeat");
+  //   //   audio.addEventListener("ended", function () {
+  //   //     console.log(indexRef.current);
+  //   //     indexRef.current = indexRef.current;
+  //   //     const newCurrentMusic = {
+  //   //       title: musicList[indexRef.current].title,
+  //   //       creator: musicList[indexRef.current].creator,
+  //   //       img: musicList[indexRef.current].avatar,
+  //   //       img_thumb: musicList[indexRef.current].bgImage,
+  //   //       url: musicList[indexRef.current].music,
+  //   //       index: indexRef.current,
+  //   //       active: true,
+  //   //     };
+  //   //     setSelectMusic(newCurrentMusic);
 
-    //     const newPlay = {
-    //       isPlay: true,
-    //       title: "Pause",
-    //     };
-    //     setPlay(newPlay);
-    //   });
-    // }
-  };
+  //   //     const newPlay = {
+  //   //       isPlay: true,
+  //   //       title: "Pause",
+  //   //     };
+  //   //     setPlay(newPlay);
+  //   //   });
+  //   // }
+  // };
 
   const repeatClick = () => {
     console.log("Repeat Click");
@@ -539,7 +539,7 @@ function MusicControl(props) {
                 fontSize: 20,
                 cursor: "pointer",
               }}
-              onClick={repeatClick}
+              // onClick={repeatClick}
             >
               {repeat === true ? (
                 <RepeatIcon

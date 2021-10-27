@@ -15,7 +15,6 @@ function App() {
     "https://api.apify.com/v2/key-value-stores/EJ3Ppyr2t73Ifit64/records/LATEST?fbclid=IwAR2j_Pu66FTXAI0xd5F0eah-kXq-BDxV-d24JKK0uNCDcTiUT-Pj3fMKZFQ";
   useEffect(() => {
     const getData = async () => {
-      //Set hard code
       try {
         const res = await axios.get(apiURL);
         const { data } = await res;
@@ -29,8 +28,6 @@ function App() {
     };
     getData();
   }, []);
-
-  // loading ? console.log("Loading") : console.log("Music List:", musicList);
 
   return (
     <div className="App">

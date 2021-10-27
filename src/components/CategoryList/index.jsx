@@ -1,34 +1,23 @@
 import {
-  Box,
   CardActionArea,
-  CardContent,
   CardMedia,
   Grid,
   Paper,
   Typography,
 } from "@material-ui/core";
-import { ThemeProvider, useTheme } from "@material-ui/core/styles";
-import React from "react";
-import useStyles from "../style";
-
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-
-import CardActions from "@material-ui/core/CardActions";
-
-import Button from "@material-ui/core/Button";
+import { ThemeProvider, useTheme } from "@material-ui/core/styles";
+import React, { useEffect } from "react";
 import {
   Link,
-  Redirect,
   Route,
   Switch,
   useHistory,
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-import Test from "../Test";
 import MusicList from "../MusicList";
-import { useEffect } from "react";
+import useStyles from "../style";
 
 CategoryList.propTypes = {};
 
@@ -46,31 +35,28 @@ function CategoryList(props) {
     setPlay,
     firstTimeRef,
   } = props;
-  const musicList = musics;
+  // const musicList = musics;
   const theme = useTheme();
   const classes = useStyles();
   const match = useRouteMatch();
   const param = useParams();
-
-  let countryCountry = param.paramID;
 
   useEffect(() => {
     // setKindOfMusic(0);
   }, []);
 
   const history = useHistory();
-  // console.log(musics.songs.hasOwnProperty("top100_VN"));
-  // console.log("top100_VN"===countryCountry);
+  //Get kind of music
+  let countryCountry = param.paramID;
   if (!musics.songs.hasOwnProperty(countryCountry)) {
     history.push("/404");
     countryCountry = "top100_VN";
-    // setCountry(countryCountry);
-    // alert("Sai")
   }
   // setCountry(countryCountry);
 
   let musicOfCountry = musics.songs[countryCountry];
 
+  const musicList = musicOfCountry;
   return (
     <Switch>
       <Route path={match.path} exact>
@@ -144,7 +130,7 @@ function CategoryList(props) {
           </Grid>
         </ThemeProvider>
       </Route>
-      <Route path={`${match.url}/:theloai`}>
+      <Route path={`${match.url}/:theloai/:id?`}>
         <MusicList
           musics={musicList}
           selectMusic={selectMusic}

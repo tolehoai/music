@@ -11,6 +11,7 @@ import { ThemeProvider, useTheme, withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 import {
+  Link,
   useHistory,
   useLocation,
   useParams,
@@ -40,27 +41,32 @@ function MusicList(props) {
     setPlay,
     firstTimeRef,
   } = props;
+  console.log("DANH SACH NHAC: ", musics);
   const patch = useRouteMatch();
-  const params = useParams();
-  console.log(patch);
-  console.log(params);
-  let countryName = patch.path.slice(1);
+
+  const [musicId, setMusicId] = useState(0);
+
+  console.log("ID PARAM: ", musicId);
+  console.log("Patch: ", patch);
+
+  var countryName = patch.path.slice(1);
 
   countryName = countryName.substring(countryName.indexOf("/") + 1);
   countryName = countryName.substring(0, countryName.indexOf("/"));
 
-  musics.songs[countryName].map((el) => {
+  //Handle covert / to - : Pop/Latin => Pop-Latin
+  musics.map((el) => {
     el.name = el.name.replace("/", "-");
   });
-  // alert(patch.params.theloai);
-  // console.log("remove", musics.songs[countryName]);
-  let indexInTop100 = musics.songs[countryName].findIndex(
+
+  let indexInTop100 = musics.findIndex(
     (obj) => obj.name === patch.params.theloai
   );
+  console.log("Vi Tri: ", indexInTop100);
 
   const history = useHistory();
 
-  const musicListNew = musics.songs[countryName][indexInTop100].songs;
+  const musicListNew = musics[indexInTop100].songs;
 
   const musicList = musicListNew;
   let i = -1;
@@ -70,16 +76,16 @@ function MusicList(props) {
   });
 
   const classes = useStyles();
-
+  const params = useParams();
   //Handle MusicClick
   const handleMusicClick = (music) => {
+    //Co the nghe nhac o nhieu bo suy tap va nhieu quoc gia nen phai set lai vi tri, dang nghe nhac VN co the chuyen sang nghe nhac AM
     setKindOfMusic(indexInTop100);
     setCountry(countryName);
+    //Dau tien vao chay useEffect se set firstTimeRef = true
     firstTimeRef.current = false;
     if (music && firstTimeRef.current === false) {
       var indexMusic = musicList.findIndex((el) => el == music);
-
-      selectMusic.active = false;
 
       const newSelectMusic = {
         title: music.title,
@@ -93,25 +99,28 @@ function MusicList(props) {
       indexRef.current = indexMusic;
 
       setSelectMusic(newSelectMusic);
+
+      // var urlArr = patch.url.split("/");
+      // var musicUrl = `${urlArr[0]}/${urlArr[1]}/${urlArr[2]}/${urlArr[3]}/${music.index}`;
+      // history.push(musicUrl);
     } else return;
   };
 
   useEffect(() => {
     const newIsPlay = true;
     let newTitle;
-    console.log("PHAT HIEN THAY DOI BAI HAT");
-    if (firstTimeRef.current === true) {
-      console.log("First time, don't play");
-      const newPlay = {
-        isPlay: false,
-        title: "Play",
-      };
-      setPlay(newPlay);
-    } else {
-      console.log("Not first time, countinue play");
-    }
+    //console.log("PHAT HIEN THAY DOI BAI HAT");
+    // if (firstTimeRef.current === true) {
+    //   console.log("First time, don't play");
+    //   const newPlay = {
+    //     isPlay: false,
+    //     title: "Play",
+    //   };
+    //   setPlay(newPlay);
+    // } else {
+    //   console.log("Not first time, countinue play");
+    // }
 
-    console.log("Title", selectMusic.title);
     var elmnt = document.getElementById(selectMusic.title);
     console.log("Scroll", elmnt);
     if (elmnt) {
@@ -136,17 +145,6 @@ function MusicList(props) {
 
   //End Handle MusicClick
   //Handle Play music click
-  const handlePlayClick = () => {
-    const newIsPlay = !play.isPlay;
-    let newTitle;
-    if (newIsPlay === true) newTitle = "Pause";
-    else newTitle = "Play";
-    const newPlay = {
-      isPlay: newIsPlay,
-      title: newTitle,
-    };
-    setPlay(newPlay);
-  };
 
   useEffect(() => {
     let audio = document.getElementById("music");
@@ -158,147 +156,6 @@ function MusicList(props) {
     // audio.play();
     document.title = "NhacCuaHoai - " + selectMusic.title;
   }, [play]);
-
-  //End handle Play music click
-
-  //Handle PreviosClick
-  const handlePreviosClick = () => {
-    indexRef.current === 0
-      ? (indexRef.current = 0)
-      : (indexRef.current = indexRef.current - 1);
-
-    selectMusic.active = false;
-    const newCurrentMusic = {
-      title: musicList[indexRef.current].title,
-      creator: musicList[indexRef.current].creator,
-      img: musicList[indexRef.current].avatar,
-      img_thumb: musicList[indexRef.current].bgImage,
-      url: musicList[indexRef.current].music,
-      index: indexRef.current,
-      active: true,
-    };
-    setSelectMusic(newCurrentMusic);
-  };
-
-  //End Handle PreviosClick
-  //Handle NextClick
-  const handleNextClick = () => {
-    indexRef.current === 98
-      ? (indexRef.current = 0)
-      : (indexRef.current = indexRef.current + 1);
-
-    selectMusic.active = false;
-
-    const newCurrentMusic = {
-      title: musicList[indexRef.current].title,
-      creator: musicList[indexRef.current].creator,
-      img: musicList[indexRef.current].avatar,
-      img_thumb: musicList[indexRef.current].bgImage,
-      url: musicList[indexRef.current].music,
-      index: indexRef.current,
-      active: true,
-    };
-    setSelectMusic(newCurrentMusic);
-  };
-
-  //End Handle NextClick
-  const PrettoSlider = withStyles({
-    root: {
-      color: "#52af77",
-      height: 8,
-    },
-    thumb: {
-      height: 24,
-      width: 24,
-      backgroundColor: "#fff",
-      border: "2px solid currentColor",
-      marginTop: -8,
-      marginLeft: -12,
-      "&:focus, &:hover, &$active": {
-        boxShadow: "inherit",
-      },
-    },
-    active: {},
-    valueLabel: {
-      left: "calc(-50% + 4px)",
-    },
-    track: {
-      height: 8,
-      borderRadius: 4,
-    },
-    rail: {
-      height: 8,
-      borderRadius: 4,
-    },
-  })(Slider);
-
-  const repeatRef = useRef(false);
-  const [repeat, setRepeat] = useState({
-    action: true,
-  });
-
-  // const handleRepeatClick = () => {
-  //   var audio = document.getElementById("music");
-  //   // const newRepeat = {
-  //   //   status: !repeat.status,
-  //   // };
-  //   // setRepeat(newRepeat);
-
-  //   repeatRef.current = !repeatRef.current;
-  //   const newAction = !repeat.action;
-
-  //   const newRepeat = {
-  //     action: repeatRef.current,
-  //   };
-
-  //   setRepeat(newRepeat);
-
-  //   // if (repeatRef.current === false) {
-
-  //   //   audio.addEventListener("ended", function () {
-  //   //     indexRef.current = indexRef.current + 1;
-
-  //   //     const newCurrentMusic = {
-  //   //       title: musicList[indexRef.current].title,
-  //   //       creator: musicList[indexRef.current].creator,
-  //   //       img: musicList[indexRef.current].avatar,
-  //   //       img_thumb: musicList[indexRef.current].bgImage,
-  //   //       url: musicList[indexRef.current].music,
-  //   //       index: indexRef.current,
-  //   //       active: true,
-  //   //     };
-  //   //     setSelectMusic(newCurrentMusic);
-
-  //   //     const newPlay = {
-  //   //       isPlay: true,
-  //   //       title: "Pause",
-  //   //     };
-  //   //     setPlay(newPlay);
-  //   //   });
-  //   // } else {
-  //   //   console.log("No Repeat");
-  //   //   audio.addEventListener("ended", function () {
-  //   //     console.log(indexRef.current);
-  //   //     indexRef.current = indexRef.current;
-  //   //     const newCurrentMusic = {
-  //   //       title: musicList[indexRef.current].title,
-  //   //       creator: musicList[indexRef.current].creator,
-  //   //       img: musicList[indexRef.current].avatar,
-  //   //       img_thumb: musicList[indexRef.current].bgImage,
-  //   //       url: musicList[indexRef.current].music,
-  //   //       index: indexRef.current,
-  //   //       active: true,
-  //   //     };
-  //   //     setSelectMusic(newCurrentMusic);
-
-  //   //     const newPlay = {
-  //   //       isPlay: true,
-  //   //       title: "Pause",
-  //   //     };
-  //   //     setPlay(newPlay);
-  //   //   });
-  //   // }
-  // };
 
   const theme = useTheme();
 

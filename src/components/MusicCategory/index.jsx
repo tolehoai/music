@@ -1,31 +1,10 @@
-import {
-  Box,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Grid,
-  Paper,
-  Typography,
-} from "@material-ui/core";
-import { ThemeProvider, useTheme } from "@material-ui/core/styles";
-import React, { useEffect } from "react";
-import useStyles from "../style";
-
-import { makeStyles } from "@material-ui/core/styles";
+import { CardMedia, Grid, Paper, Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-
-import CardActions from "@material-ui/core/CardActions";
-
-import Button from "@material-ui/core/Button";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  useRouteMatch,
-  Link,
-} from "react-router-dom";
+import { makeStyles, ThemeProvider, useTheme } from "@material-ui/core/styles";
+import React, { useEffect } from "react";
+import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import CategoryList from "../CategoryList";
-import MusicList from "../MusicList";
+import useStyles from "../style";
 
 MusicCategory.propTypes = {};
 
@@ -43,7 +22,8 @@ function MusicCategory(props) {
     setPlay,
     firstTimeRef,
   } = props;
-
+  console.log("Quoc gia hien tai:", country);
+  console.log("Kind of music current: ", kindOfMusic);
   const match = useRouteMatch();
   useEffect(() => {
     const newPlay = {
